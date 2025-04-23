@@ -1,39 +1,37 @@
 const user_cart = {
     template:`<div>
-                 <div v-if="cart_products.hasOwnProperty('message')">
-                    <h1>{{ cart_products['message'] }}</h1>
+    <div v-if="cart_products.hasOwnProperty('message')">
+        <h1>{{ cart_products['message'] }}</h1>
+    </div>
+    <div v-else>
+        <div class="row">
+            <div v-for="(value, key) in cart_products" :key="key" class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                    <strong>{{ value["product_name"] }}</strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <p>Manufacture Date:</p> {{ value["manufacture_date"] }}
+                            <p>Expiry Date:</p> {{ value["expiry_date"] }}
+                            <strong>Rate:</strong> {{ value["rate"] }}<br>
+                            <strong>Unit:</strong> {{ value["unit"] }}<br>
+                            <strong>Quantity:</strong>
+                            <span v-for="(value_,key_) in cart_data" :key="key_" v-if="IsProductMatchCartQuantity(value_['product_id'],value['product_id'])">
+                                {{ value_["quantity"] }}
+                            </span><br>
+                            <button class="btn btn-danger" @click="RemoveProductFromCart(value['product_id'])">Remove</button>
+                            <button class="btn btn-warning" @click="Edit_quantity(value['product_id'])">+/-</button>
+                        </p>
+                    </div>
                 </div>
-                <table class='table' v-else>
-                    <thead>
-                    <tr>
-                        <th>Seq No</th>
-                        <th>Product name</th>
-                        <th>Manufacture Date</th>
-                        <th>Expiry Date</th>
-                        <th>Rate</th>
-                        <th>Unit</th>
-                        <th>quantity</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(value, key) in cart_products" :key="key">
-                        <td>{{ key }}</td>
-                        <td>{{ value["product_name"] }}</td>
-                        <td>{{ value["manufacture_date"] }}</td>
-                        <td>{{ value["expiry_date"] }}</td>
-                        <td>{{value["rate"]}}</td>
-                        <td>{{value["unit"]}}</td>
-                        <td v-for="(value_,key_) in cart_data" :key="key_" v-if="IsProductMatchCartQuantity(value_['product_id'],value['product_id'])" > {{value_["quantity"]}} </td>
-                        <td>
-                        <button class='btn btn-danger' @click="RemoveProductFromCart(value['product_id'])" >Remove</button>
-                        <button class='btn btn-warning' @click="Edit_quantity(value['product_id'])">Edit</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <button class='btn btn-success' @click="sendToPurchase()">Purchase</button>
-              </div>`,
+            </div>
+        </div>
+        <button class="btn btn-success" @click="sendToPurchase()">Purchase</button>
+    </div>
+</div>
+
+`,
     data() {
         return {
             error:null,

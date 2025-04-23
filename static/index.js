@@ -1,26 +1,30 @@
 import router from './router.js'
 import Navbar from './components/Navbar.js'
-import adminHome from './components/AdminHome.js'
+import managerHome from './components/managerHome.js'
 import HomeElse from './components/HomeElse.js'
+import pick_to_register from './components/pick_to_register.js'
 
 router.beforeEach((to, from, next) => {
   if (to.name !== 'Login' && !localStorage.getItem('auth-token') ? true : false)
-    next({ name: 'Login' })
+    if (to.name === 'register_page' || (to.name === 'registration') ){
+      next();
+    }else{
+      next({ name: 'Login' })
+    } 
   else next()
 }),
 
 new Vue({
   el: '#app',
   template: `<div>
-  <Navbar />
+  <Navbar :key="$route.path" />
   <router-view></router-view>
   </div>
   `,
 
   data() {
     return {
-      studentId:5,
-      courseId:5,
+      
     }
   },
 
@@ -29,7 +33,8 @@ new Vue({
 
   components: {
     Navbar,
-    adminHome,
+    managerHome,
     HomeElse,
+    pick_to_register,
   },
 })

@@ -1,4 +1,4 @@
-const request_edit_category = {
+const admin_edit_category = {
     template: `<div>
                 <div class='text-danger'>*{{error}}</div>
                     <form class="row g-3" @submit.prevent="onSubmit">
@@ -34,7 +34,7 @@ const request_edit_category = {
             console.log(this.category_id)
             if (this.category_name) {
                try{
-                const response = await fetch(`http://127.0.0.1:5000/request_edit_category/${this.category_id}/${this.userEmail}`, {
+                const response = await fetch(`http://127.0.0.1:5000/edit_category_from_admin/${this.category_id}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const request_edit_category = {
                     });
                     const data = await response.json()
                     if (response.ok) {
-                        this.$router.push('/managerHome'); 
+                        this.$router.push('/InstructorHome'); 
                     } else {
                         this.error = data.message
                         console.error('Failed to add category');
@@ -54,7 +54,7 @@ const request_edit_category = {
                 console.error('Error:', error);
                  }
             } else{
-                this.$router.push('/AdminHome'); 
+                this.$router.push('/InstructorHome'); 
                   }
         },
                 
@@ -64,5 +64,5 @@ const request_edit_category = {
     },
 }   
 
-export default request_edit_category;
+export default admin_edit_category;
 

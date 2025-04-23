@@ -15,23 +15,28 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String(255))
     active = db.Column(db.Boolean())
+    logout_time = db.Column(db.DateTime())
+    is_login = db.Column(db.Boolean())
     fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False) 
     '''this fs_uniquifier will generate authentication token'''
     roles = db.relationship('Role', secondary='roles_users', backref=db.backref('users', lazy='dynamic'))
     study_resource = db.relationship('StudyResource', backref='creator')
-    
+
+class Purchased(db.Model):
+    __tablename__ = 'purchased'
+    email = db.Column(db.String, db.ForeignKey("user.email"), primary_key = True)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.product_id"), nullable=False, primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey("categories.category_id"), nullable=False, primary_key=True)
+    quantity_added = db.Column(db.Integer)
+    product_name = db.Column(db.String, db.ForeignKey("product.product_name"),nullable = False)
+
+
+
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
 
-class StudyResource(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    topic = db.Column(db.String, nullable=False)
-    description = db.Column(db.String, nullable=False)
-    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    resource_link = db.Column(db.String, nullable=False)
-    is_approved = db.Column(db.Boolean(), default=False)
 
 class Categories(db.Model):
     __tablename__ = "categories"

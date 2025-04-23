@@ -2,6 +2,7 @@
 const TrueAdmin = {
   template: `<div>
   This is True admin page
+  <router-link to="/inbox">Approve Requests</router-link>
   <div v-if="category.hasOwnProperty('message')">
     <h1>{{ category['message'] }}</h1>
   </div>
@@ -19,21 +20,24 @@ const TrueAdmin = {
         <td>{{ value }}</td>
         <td>
           <button class='btn btn-danger' @click="DeleteProductAdmin(key)">Remove</button>
+          <button class='btn btn-success' @click="edit_category(key)">Edit Category</button>
         </td>
       </tr>
     </tbody>
   </table>
   <button class='btn btn-success' @click="add_category()">Add Category</button>
+  
 </div>`,
   data(){
       return {
           category:null,
+          userEmail:localStorage.getItem('email'),
       }
   },
   
   methods: {
     fetch_category_detail:function(){
-        const url="http://127.0.0.1:5000/admin_dashboard";
+        const url="http://127.0.0.1:5000/admin_dashboard/" + this.userEmail;
         fetch(url).then(response => response.json()).then(data=>{this.category=data}).catch((error)=>{console.log("Error:",error)});
     },
     DeleteProductAdmin(id){
@@ -60,7 +64,10 @@ const TrueAdmin = {
     },
     add_category(){
       this.$router.push('/create_category');
-    }
+    },
+    edit_category(id){
+      this.$router.push(`/admin_edit_category/${id}`);
+    },
   },
   
   mounted() {

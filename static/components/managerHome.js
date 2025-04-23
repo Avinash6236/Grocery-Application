@@ -1,11 +1,16 @@
 
-const adminHome = {
+const managerHome = {
   template: `<div>
-  This is admin page
+  This is Manager page
   <div v-if="category.hasOwnProperty('message')">
     <h1>{{ category['message'] }}</h1>
+    <button class='btn btn-success' @click="request_add_category()">Request Add Category</button>
   </div>
-  <table class='table' v-else>
+  <div v-if="category.hasOwnProperty('message2')">
+    <h1>{{ category['message2'] }}</h1>
+  </div>
+  <div v-else>
+  <table class='table'>
     <thead>
       <tr>
         <th>Seq No</th>
@@ -26,6 +31,7 @@ const adminHome = {
     </tbody>
   </table>
   <button class='btn btn-success' @click="request_add_category()">Request Add Category</button>
+  </div>
 </div>`,
   
   props:['studentId','courseId'],
@@ -44,11 +50,11 @@ const adminHome = {
   
   methods: {
     fetch_category_detail:function(){
-        const url="http://127.0.0.1:5000/admin_dashboard";
+        const url="http://127.0.0.1:5000/admin_dashboard/" + this.userEmail;
         fetch(url).then(response => response.json()).then(data=>{this.category=data}).catch((error)=>{console.log("Error:",error)});
     },
     seeProductAdmin(id){
-        console.log(id)
+  
         this.$router.push('/category/product/' + id);
     },
     DeleteProductAdmin(id){
@@ -94,4 +100,4 @@ const adminHome = {
   }
 }
 
-export default adminHome
+export default managerHome

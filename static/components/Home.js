@@ -1,13 +1,13 @@
 import StudentHome from './StudentHome.js'
 import InstructorHome from './InstructorHome.js'
-import AdminHome from './AdminHome.js'
+import managerHome from './managerHome.js'
 import HomeElse from './HomeElse.js'
 
 export default {
   template: `<div>
-  <StudentHome v-if="userRole=='stud'" :userEmail="userEmail"/>
-  <AdminHome v-if="userRole=='admin'" />
-  <InstructorHome v-if="userRole=='inst'" />
+  <StudentHome v-if="userRole=='user'" :userEmail="userEmail"/>
+  <managerHome v-if="userRole=='manager'" />
+  <InstructorHome v-if="userRole=='admin'" />
   </div>`,
 
   data() {
@@ -20,7 +20,7 @@ export default {
   components: {
     StudentHome,
     InstructorHome,
-    AdminHome,
+    managerHome,
     HomeElse,
   },
 }

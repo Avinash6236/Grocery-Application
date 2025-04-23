@@ -2,22 +2,29 @@
 
 const HomeElse={
   template:`<div>
-            <h1>Category id: {{category_id}}</h1>
             <div v-if="products.hasOwnProperty('message')">
               <h1>{{ products['message'] }}</h1>
             </div>
             <table class='table' v-else>
             <thead>
               <tr>
-                <th>Seq No</th>
                 <th>Product name</th>
+                <th>Manufacture date</th>
+                <th>expiry date</th>
+                <th>unit</th>
+                <th>rate</th>
+                <th> quantity</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(value, key) in products" :key="key">
-                <td>{{ key }}</td>
-                <td>{{ value }}</td>
+                <td>{{ value['product_name'] }}</td>
+                <td>{{value['manufacture_date']}}</td>
+                <td>{{value['expiry_date']}}</td>
+                <td>{{value['unit']}}</td>
+                <td>{{value['rate']}}</td>
+                <td>{{value['quantity']}}</td>
                 <td>
                   <button class='btn btn-warning' @click="edit_product(key)">Edit Product</button>
                   <button class='btn btn-danger' @click="delete_product(key)">Remove Product</button>

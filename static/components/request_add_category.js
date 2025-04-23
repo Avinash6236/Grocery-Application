@@ -27,7 +27,7 @@ const request_add_category = {
                     });
                     const data = await response.json()
                     if (response.ok) {
-                        this.$router.push('/AdminHome'); 
+                        this.$router.push('/managerHome'); 
                     } else {
                         this.error = data.message
                         console.error('Failed to add category');
